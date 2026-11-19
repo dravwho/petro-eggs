@@ -1,14 +1,14 @@
 {
     "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
     "meta": { "version": "PTDL_v2", "update_url": null },
-    "exported_at": "2026-06-06T00:00:00+07:00",
+    "exported_at": "2026-11-19T10:00:00+08:00",
     "name": "MySQL",
     "author": "aetherix@lunexia.com",
-    "description": "MySQL database server egg.\r\n\r\nMySQL 8.4 LTS is the recommended version. MySQL 8.0 reached end-of-life in April 2026.\r\n\r\nDefault port: 3306.\r\nData is stored in /home/container/data.",
+    "description": "MySQL database server egg.\r\n\r\nMySQL 9.7 LTS is the recommended version. MySQL 8.4 LTS remains available.\r\n\r\nDefault port: 3306.\r\nData is stored in /home/container/data.",
     "features": null,
     "docker_images": {
-        "MySQL 8.4 LTS (Recommended)": "ghcr.io/parkervcp/yolks:mysql_8",
-        "MySQL 8.0 (EOL)": "ghcr.io/parkervcp/yolks:mysql_8"
+        "MySQL 9.7 LTS (Recommended)": "ghcr.io/parkervcp/yolks:mysql_8",
+        "MySQL 8.4 LTS": "ghcr.io/parkervcp/yolks:mysql_8"
     },
     "file_denylist": [],
     "startup": "mysqld --user=root --datadir=/home/container/data --port={{SERVER_PORT}} --bind-address=0.0.0.0 --innodb-buffer-pool-size={{BUFFER_POOL}}M",
@@ -20,7 +20,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!/bin/bash\r\n# MySQL Installation Script\r\n# by Aetherix-ops\r\n#\r\napt update && apt install -y mysql-server\r\n\r\nmkdir -p /mnt/server/data\r\n\r\nmysqld --initialize-insecure --user=root --datadir=/mnt/server/data\r\n\r\necho \"[mysqld]\" > /mnt/server/my.cnf\r\necho \"datadir=/home/container/data\" >> /mnt/server/my.cnf\r\necho \"port=3306\" >> /mnt/server/my.cnf\r\necho \"bind-address=0.0.0.0\" >> /mnt/server/my.cnf\r\necho \"innodb_buffer_pool_size=128M\" >> /mnt/server/my.cnf\r\n\r\necho \"install complete\"",
+            "script": "#!/bin/bash\r\n# MySQL Installation Script\r\n#\r\napt update && apt install -y mysql-server\r\n\r\nmkdir -p /mnt/server/data\r\n\r\nmysqld --initialize-insecure --user=root --datadir=/mnt/server/data\r\n\r\necho \"[mysqld]\" > /mnt/server/my.cnf\r\necho \"datadir=/home/container/data\" >> /mnt/server/my.cnf\r\necho \"port=3306\" >> /mnt/server/my.cnf\r\necho \"bind-address=0.0.0.0\" >> /mnt/server/my.cnf\r\necho \"innodb_buffer_pool_size=128M\" >> /mnt/server/my.cnf\r\n\r\necho \"install complete\"",
             "container": "ghcr.io/parkervcp/yolks:mysql_8",
             "entrypoint": "bash"
         }
