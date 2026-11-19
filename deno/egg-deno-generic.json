@@ -1,13 +1,13 @@
 {
     "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
     "meta": { "version": "PTDL_v2", "update_url": null },
-    "exported_at": "2026-06-06T00:00:00+07:00",
+    "exported_at": "2026-11-19T10:00:00+08:00",
     "name": "deno generic",
     "author": "aetherix@lunexia.com",
-    "description": "A generic Deno egg.\r\n\r\nDeno v2.7 — secure TypeScript runtime. Security-first with explicit permission flags.\r\n\r\nThis will clone a git repo. Defaults to master branch.\r\nPermissions: --allow-net --allow-read --allow-env --allow-write",
+    "description": "A generic Deno egg.\r\n\r\nDeno v2.9 — secure TypeScript runtime. Security-first with explicit permission flags.\r\n\r\nThis will clone a git repo. Defaults to master branch.\r\nPermissions: --allow-net --allow-read --allow-env --allow-write",
     "features": null,
     "docker_images": {
-        "Deno 2.7 (Latest)": "ghcr.io/parkervcp/yolks:deno_2"
+        "Deno 2.9 (Latest)": "ghcr.io/parkervcp/yolks:deno_2"
     },
     "file_denylist": [],
     "startup": "if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == \"1\" ]]; then git pull; fi; /usr/bin/deno run --allow-net --allow-read --allow-env --allow-write /home/container/{{MAIN_FILE}}",
@@ -19,7 +19,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!/bin/bash\r\n# Deno Generic Installation Script\r\n# by Aetherix-ops\r\n#\r\napt update && apt install -y git curl jq file unzip\r\nmkdir -p /mnt/server && cd /mnt/server\r\n\r\nif [ \"${USER_UPLOAD}\" == \"true\" ] || [ \"${USER_UPLOAD}\" == \"1\" ]; then\r\n    echo \"user upload mode.\"; exit 0\r\nfi\r\n\r\n[[ ${GIT_ADDRESS} != *.git ]] && GIT_ADDRESS=${GIT_ADDRESS}.git\r\n[ -z \"${USERNAME}\" ] || GIT_ADDRESS=\"https://${USERNAME}:${ACCESS_TOKEN}@$(echo ${GIT_ADDRESS} | cut -d/ -f3-)\"\r\n\r\nif [ ! \"$(ls -A /mnt/server)\" ]; then\r\n    git clone ${GIT_ADDRESS} /mnt/server\r\n    [ ! -z \"${BRANCH}\" ] && git checkout ${BRANCH}\r\nfi\r\n\r\nif [ -f /mnt/server/deno.json ] || [ -f /mnt/server/deno.jsonc ]; then\r\n    echo \"caching deno dependencies...\"\r\n    /usr/bin/deno cache /mnt/server/${MAIN_FILE}\r\nfi\r\n\r\necho \"install complete\"",
+            "script": "#!/bin/bash\r\n# Deno Generic Installation Script\r\n#\r\napt update && apt install -y git curl jq file unzip\r\nmkdir -p /mnt/server && cd /mnt/server\r\n\r\nif [ \"${USER_UPLOAD}\" == \"true\" ] || [ \"${USER_UPLOAD}\" == \"1\" ]; then\r\n    echo \"user upload mode.\"; exit 0\r\nfi\r\n\r\n[[ ${GIT_ADDRESS} != *.git ]] && GIT_ADDRESS=${GIT_ADDRESS}.git\r\n[ -z \"${USERNAME}\" ] || GIT_ADDRESS=\"https://${USERNAME}:${ACCESS_TOKEN}@$(echo ${GIT_ADDRESS} | cut -d/ -f3-)\"\r\n\r\nif [ ! \"$(ls -A /mnt/server)\" ]; then\r\n    git clone ${GIT_ADDRESS} /mnt/server\r\n    [ ! -z \"${BRANCH}\" ] && git checkout ${BRANCH}\r\nfi\r\n\r\nif [ -f /mnt/server/deno.json ] || [ -f /mnt/server/deno.jsonc ]; then\r\n    echo \"caching deno dependencies...\"\r\n    /usr/bin/deno cache /mnt/server/${MAIN_FILE}\r\nfi\r\n\r\necho \"install complete\"",
             "container": "ghcr.io/parkervcp/yolks:deno_2",
             "entrypoint": "bash"
         }
