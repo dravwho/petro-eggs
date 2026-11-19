@@ -9,7 +9,7 @@ Forked and updated from pelican-eggs/eggs (https://github.com/pelican-eggs/eggs)
 
 | Runtime   | Version                           | File |
 |-----------|-----------------------------------|------------------------------------------|
-| Node.js   | 26 / 24 / 22 (LTS only)           | nodejs/egg-node-js.json |
+| Node.js   | 20 / 21 / 22 / 23 / 24 / 26       | nodejs/egg-node-js.json |
 | Python    | 3.15 / 3.14 / 3.13 / 3.12         | python/egg-python-generic.json |
 | Bun       | 1.4 (Latest)                      | bun/egg-bun-generic.json |
 | Deno      | 2.9 (Latest)                      | deno/egg-deno-generic.json |
@@ -40,7 +40,7 @@ Forked and updated from pelican-eggs/eggs (https://github.com/pelican-eggs/eggs)
 ## What Changed (Nov 2026 Update)
 
 ### Runtime eggs
-- **Node.js**: Dropped EOL versions (18/20/21/23). Only supported LTS remain (26/24/22).
+- **Node.js**: Versions 20 through 26 (dropped only older EOL like 18).
 - **Python**: Added 3.15 and 3.14. Removed 3.10 (EOL).
 - **Bun**: Updated to 1.4 with latest runtime improvements.
 - **Deno**: Updated to 2.9 series.
@@ -110,7 +110,7 @@ ptero-eggs/
 
 **v1.3.0 - 2026-11-19**
 - Major version bump for all runtimes and databases
-- Node.js: only LTS versions (26/24/22)
+- Node.js: 20 / 21 / 22 / 23 / 24 / 26
 - Python: 3.15 / 3.14 / 3.13 / 3.12
 - Bun 1.4, Deno 2.9
 - MySQL 9.7 LTS, MariaDB 12.3 LTS
