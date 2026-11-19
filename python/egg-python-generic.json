@@ -1,16 +1,16 @@
 {
     "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
     "meta": { "version": "PTDL_v2", "update_url": null },
-    "exported_at": "2026-06-06T00:00:00+07:00",
+    "exported_at": "2026-11-19T10:00:00+08:00",
     "name": "python generic (updated)",
     "author": "aetherix@lunexia.com",
-    "description": "A generic Python egg.\r\n\r\nUpdated with Python 3.13 support.\r\n\r\nThis will clone a git repo. Defaults to master if no branch is specified.\r\nInstalls requirements.txt automatically on install.",
+    "description": "A generic Python egg.\r\n\r\nUpdated with Python 3.15 / 3.14 / 3.13 / 3.12 support.\r\n\r\nThis will clone a git repo. Defaults to master if no branch is specified.\r\nInstalls requirements.txt automatically on install.",
     "features": null,
     "docker_images": {
-        "Python 3.13 (Latest)": "ghcr.io/parkervcp/yolks:python_3.13",
-        "Python 3.12": "ghcr.io/parkervcp/yolks:python_3.12",
-        "Python 3.11": "ghcr.io/parkervcp/yolks:python_3.11",
-        "Python 3.10": "ghcr.io/parkervcp/yolks:python_3.10"
+        "Python 3.15 (Latest)": "ghcr.io/parkervcp/yolks:python_3.15",
+        "Python 3.14": "ghcr.io/parkervcp/yolks:python_3.14",
+        "Python 3.13": "ghcr.io/parkervcp/yolks:python_3.13",
+        "Python 3.12": "ghcr.io/parkervcp/yolks:python_3.12"
     },
     "file_denylist": [],
     "startup": "if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == \"1\" ]]; then git pull; fi; if [[ ! -z ${PY_PACKAGES} ]]; then pip install ${PY_PACKAGES}; fi; if [ -f /home/container/requirements.txt ]; then pip install -r requirements.txt; fi; python /home/container/{{MAIN_FILE}}",
@@ -22,8 +22,8 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!/bin/bash\r\n# Python Generic Installation Script\r\n# by Aetherix-ops\r\n#\r\napt update && apt install -y git curl jq file unzip python3 python3-pip\r\nmkdir -p /mnt/server && cd /mnt/server\r\n\r\nif [ \"${USER_UPLOAD}\" == \"true\" ] || [ \"${USER_UPLOAD}\" == \"1\" ]; then\r\n    echo \"user upload mode.\"; exit 0\r\nfi\r\n\r\n[[ ${GIT_ADDRESS} != *.git ]] && GIT_ADDRESS=${GIT_ADDRESS}.git\r\n[ -z \"${USERNAME}\" ] || GIT_ADDRESS=\"https://${USERNAME}:${ACCESS_TOKEN}@$(echo ${GIT_ADDRESS} | cut -d/ -f3-)\"\r\n\r\nif [ ! \"$(ls -A /mnt/server)\" ]; then\r\n    git clone ${GIT_ADDRESS} /mnt/server\r\n    [ ! -z \"${BRANCH}\" ] && git checkout ${BRANCH}\r\nfi\r\n\r\n[ -f /mnt/server/requirements.txt ] && pip install -r /mnt/server/requirements.txt\r\necho \"install complete\"",
-            "container": "ghcr.io/parkervcp/yolks:python_3.13",
+            "script": "#!/bin/bash\r\n# Python Generic Installation Script\r\n#\r\napt update && apt install -y git curl jq file unzip python3 python3-pip\r\nmkdir -p /mnt/server && cd /mnt/server\r\n\r\nif [ \"${USER_UPLOAD}\" == \"true\" ] || [ \"${USER_UPLOAD}\" == \"1\" ]; then\r\n    echo \"user upload mode.\"; exit 0\r\nfi\r\n\r\n[[ ${GIT_ADDRESS} != *.git ]] && GIT_ADDRESS=${GIT_ADDRESS}.git\r\n[ -z \"${USERNAME}\" ] || GIT_ADDRESS=\"https://${USERNAME}:${ACCESS_TOKEN}@$(echo ${GIT_ADDRESS} | cut -d/ -f3-)\"\r\n\r\nif [ ! \"$(ls -A /mnt/server)\" ]; then\r\n    git clone ${GIT_ADDRESS} /mnt/server\r\n    [ ! -z \"${BRANCH}\" ] && git checkout ${BRANCH}\r\nfi\r\n\r\n[ -f /mnt/server/requirements.txt ] && pip install -r /mnt/server/requirements.txt\r\necho \"install complete\"",
+            "container": "ghcr.io/parkervcp/yolks:python_3.15",
             "entrypoint": "bash"
         }
     },
@@ -109,4 +109,4 @@
             "field_type": "text"
         }
     ]
-        }
+}

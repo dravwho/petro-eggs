@@ -1,10 +1,10 @@
 {
     "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
     "meta": { "version": "PTDL_v2", "update_url": null },
-    "exported_at": "2026-06-06T00:00:00+07:00",
+    "exported_at": "2026-11-19T10:00:00+08:00",
     "name": "PostgreSQL",
     "author": "aetherix@lunexia.com",
-    "description": "PostgreSQL database server egg.\r\n\r\nPostgreSQL 18 is the latest release (May 2026). PostgreSQL 17 remains supported.\r\n\r\nDefault port: 5432.\r\nData is stored in /home/container/data.",
+    "description": "PostgreSQL database server egg.\r\n\r\nPostgreSQL 18 is the latest GA release. PostgreSQL 17/16/15 remain supported.\r\nPostgreSQL 14 reached end-of-life in November 2026.\r\n\r\nDefault port: 5432.\r\nData is stored in /home/container/data.",
     "features": null,
     "docker_images": {
         "PostgreSQL 18 (Latest)": "ghcr.io/parkervcp/yolks:postgres_18",
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!/bin/bash\r\n# PostgreSQL Installation Script\r\n# by Aetherix-ops\r\n#\r\napt update && apt install -y postgresql postgresql-contrib\r\n\r\nmkdir -p /mnt/server/data\r\nchown postgres:postgres /mnt/server/data\r\n\r\nsu postgres -c \"initdb -D /mnt/server/data\"\r\n\r\necho \"host all all 0.0.0.0/0 md5\" >> /mnt/server/data/pg_hba.conf\r\necho \"listen_addresses = '*'\" >> /mnt/server/data/postgresql.conf\r\necho \"port = 5432\" >> /mnt/server/data/postgresql.conf\r\n\r\necho \"install complete\"",
+            "script": "#!/bin/bash\r\n# PostgreSQL Installation Script\r\n#\r\napt update && apt install -y postgresql postgresql-contrib\r\n\r\nmkdir -p /mnt/server/data\r\nchown postgres:postgres /mnt/server/data\r\n\r\nsu postgres -c \"initdb -D /mnt/server/data\"\r\n\r\necho \"host all all 0.0.0.0/0 md5\" >> /mnt/server/data/pg_hba.conf\r\necho \"listen_addresses = '*'\" >> /mnt/server/data/postgresql.conf\r\necho \"port = 5432\" >> /mnt/server/data/postgresql.conf\r\n\r\necho \"install complete\"",
             "container": "ghcr.io/parkervcp/yolks:postgres_18",
             "entrypoint": "bash"
         }

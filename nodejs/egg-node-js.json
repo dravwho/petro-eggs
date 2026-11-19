@@ -4,22 +4,18 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2026-06-06T00:00:00+07:00",
+    "exported_at": "2026-11-19T10:00:00+08:00",
     "name": "node.js generic (updated)",
     "author": "aetherix@lunexia.com",
-    "description": "a generic node.js egg\r\n\r\nFork of pelican-eggs\/eggs with updated Node.js versions up to v26.\r\nhttps:\/\/github.com\/Aetherix-ops\/nodejs-egg-updated\r\n\r\nThis will clone a git repo. it defaults to master if no branch is specified.\r\n\r\nInstalls the node_modules on install. If you set user_upload then I assume you know what you are doing.",
+    "description": "A generic Node.js egg.\r\n\r\nUpdated with only supported LTS versions (26 / 24 / 22).\r\nEOL versions (18/20/21/23) have been removed.\r\n\r\nThis will clone a git repo. Defaults to master if no branch is specified.\r\nInstalls node_modules on install. If you set user_upload then it assumes you know what you are doing.",
     "features": null,
     "docker_images": {
-        "Nodejs 26": "ghcr.io\/parkervcp\/yolks:nodejs_26",
-        "Nodejs 24": "ghcr.io\/parkervcp\/yolks:nodejs_24",
-        "Nodejs 23": "ghcr.io\/parkervcp\/yolks:nodejs_23",
-        "Nodejs 22": "ghcr.io\/parkervcp\/yolks:nodejs_22",
-        "Nodejs 21": "ghcr.io\/parkervcp\/yolks:nodejs_21",
-        "Nodejs 20": "ghcr.io\/parkervcp\/yolks:nodejs_20",
-        "Nodejs 18": "ghcr.io\/parkervcp\/yolks:nodejs_18"
+        "Nodejs 26 (LTS)": "ghcr.io/parkervcp/yolks:nodejs_26",
+        "Nodejs 24 (LTS)": "ghcr.io/parkervcp/yolks:nodejs_24",
+        "Nodejs 22 (LTS)": "ghcr.io/parkervcp/yolks:nodejs_22"
     },
     "file_denylist": [],
-    "startup": "if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == \"1\" ]]; then git pull; fi; if [[ ! -z ${NODE_PACKAGES} ]]; then \/usr\/local\/bin\/npm install ${NODE_PACKAGES}; fi; if [[ ! -z ${UNNODE_PACKAGES} ]]; then \/usr\/local\/bin\/npm uninstall ${UNNODE_PACKAGES}; fi; if [ -f \/home\/container\/package.json ]; then \/usr\/local\/bin\/npm install; fi; \/usr\/local\/bin\/node \/home\/container\/{{BOT_JS_FILE}}",
+    "startup": "if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == \"1\" ]]; then git pull; fi; if [[ ! -z ${NODE_PACKAGES} ]]; then /usr/local/bin/npm install ${NODE_PACKAGES}; fi; if [[ ! -z ${UNNODE_PACKAGES} ]]; then /usr/local/bin/npm uninstall ${UNNODE_PACKAGES}; fi; if [ -f /home/container/package.json ]; then /usr/local/bin/npm install; fi; /usr/local/bin/node /home/container/{{BOT_JS_FILE}}",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"change this part\"\r\n}",
@@ -28,8 +24,8 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n# NodeJS Installation Script\r\n# Updated fork by Aetherix-ops\r\n# Supports Node.js 18 - 26\r\n#\r\n# Server Files: \/mnt\/server\r\napt update\r\napt install -y git curl jq file unzip make gcc g++ python3 python3-dev libtool\r\n\r\nmkdir -p \/mnt\/server\r\ncd \/mnt\/server\r\n\r\nif [ \"${USER_UPLOAD}\" == \"true\" ] || [ \"${USER_UPLOAD}\" == \"1\" ]; then\r\n    echo -e \"assuming user knows what they are doing have a good day.\"\r\n    exit 0\r\nfi\r\n\r\n## add git ending if it's not on the address\r\nif [[ ${GIT_ADDRESS} != *.git ]]; then\r\n    GIT_ADDRESS=${GIT_ADDRESS}.git\r\nfi\r\n\r\nif [ -z \"${USERNAME}\" ] && [ -z \"${ACCESS_TOKEN}\" ]; then\r\n    echo -e \"using anon api call\"\r\nelse\r\n    GIT_ADDRESS=\"https:\/\/${USERNAME}:${ACCESS_TOKEN}@$(echo -e ${GIT_ADDRESS} | cut -d\/ -f3-)\"\r\nfi\r\n\r\n## pull git repo\r\nif [ \"$(ls -A \/mnt\/server)\" ]; then\r\n    echo -e \"\/mnt\/server directory is not empty.\"\r\n    if [ -d .git ]; then\r\n        echo -e \".git directory exists\"\r\n        if [ -f .git\/config ]; then\r\n            echo -e \"loading git config\"\r\n            ORIGIN=$(git config --get remote.origin.url)\r\n            echo -e \"git origin set to ${ORIGIN}\"\r\n        else\r\n            echo -e \"error no git config file found\"\r\n            exit 1\r\n        fi\r\n    fi\r\nelse\r\n    echo -e \"\/mnt\/server is empty.\\ncleaning up.\"\r\n    if [ -z \"${GIT_ADDRESS}\" ]; then\r\n        echo -e \"git address is not set.\"\r\n        exit 1\r\n    fi\r\n    git clone ${GIT_ADDRESS} \/mnt\/server\r\n    if [ -z \"${BRANCH}\" ]; then\r\n        echo -e \"no branch specified. using master\"\r\n    else\r\n        echo -e \"switching to branch ${BRANCH}\"\r\n        git checkout ${BRANCH}\r\n    fi\r\nfi\r\n\r\nif [ -f \/mnt\/server\/package.json ]; then\r\n    echo -e \"running npm install\"\r\n    \/usr\/local\/bin\/npm install\r\n    echo -e \"npm install complete\"\r\nfi\r\n\r\necho -e \"\\ninstall complete\"",
-            "container": "ghcr.io\/parkervcp\/yolks:nodejs_26",
+            "script": "#!/bin/bash\r\n# NodeJS Installation Script\r\n# Supports Node.js 22 / 24 / 26 LTS\r\n#\r\n# Server Files: /mnt/server\r\napt update\r\napt install -y git curl jq file unzip make gcc g++ python3 python3-dev libtool\r\n\r\nmkdir -p /mnt/server\r\ncd /mnt/server\r\n\r\nif [ \"${USER_UPLOAD}\" == \"true\" ] || [ \"${USER_UPLOAD}\" == \"1\" ]; then\r\n    echo -e \"assuming user knows what they are doing have a good day.\"\r\n    exit 0\r\nfi\r\n\r\n## add git ending if it's not on the address\r\nif [[ ${GIT_ADDRESS} != *.git ]]; then\r\n    GIT_ADDRESS=${GIT_ADDRESS}.git\r\nfi\r\n\r\nif [ -z \"${USERNAME}\" ] && [ -z \"${ACCESS_TOKEN}\" ]; then\r\n    echo -e \"using anon api call\"\r\nelse\r\n    GIT_ADDRESS=\"https://${USERNAME}:${ACCESS_TOKEN}@$(echo -e ${GIT_ADDRESS} | cut -d/ -f3-)\"\r\nfi\r\n\r\n## pull git repo\r\nif [ \"$(ls -A /mnt/server)\" ]; then\r\n    echo -e \"/mnt/server directory is not empty.\"\r\n    if [ -d .git ]; then\r\n        echo -e \".git directory exists\"\r\n        if [ -f .git/config ]; then\r\n            echo -e \"loading git config\"\r\n            ORIGIN=$(git config --get remote.origin.url)\r\n            echo -e \"git origin set to ${ORIGIN}\"\r\n        else\r\n            echo -e \"error no git config file found\"\r\n            exit 1\r\n        fi\r\n    fi\r\nelse\r\n    echo -e \"/mnt/server is empty.\\ncleaning up.\"\r\n    if [ -z \"${GIT_ADDRESS}\" ]; then\r\n        echo -e \"git address is not set.\"\r\n        exit 1\r\n    fi\r\n    git clone ${GIT_ADDRESS} /mnt/server\r\n    if [ -z \"${BRANCH}\" ]; then\r\n        echo -e \"no branch specified. using master\"\r\n    else\r\n        echo -e \"switching to branch ${BRANCH}\"\r\n        git checkout ${BRANCH}\r\n    fi\r\nfi\r\n\r\nif [ -f /mnt/server/package.json ]; then\r\n    echo -e \"running npm install\"\r\n    /usr/local/bin/npm install\r\n    echo -e \"npm install complete\"\r\nfi\r\n\r\necho -e \"\\ninstall complete\"",
+            "container": "ghcr.io/parkervcp/yolks:nodejs_26",
             "entrypoint": "bash"
         }
     },
@@ -56,7 +52,7 @@
         },
         {
             "name": "Git Repo Address",
-            "description": "Git repo to clone. Example: https:\/\/github.com\/username\/repo",
+            "description": "Git repo to clone. Example: https://github.com/username/repo",
             "env_variable": "GIT_ADDRESS",
             "default_value": "",
             "user_viewable": true,
@@ -125,5 +121,4 @@
             "field_type": "text"
         }
     ]
-      }
-          
+}

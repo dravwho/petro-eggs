@@ -1,13 +1,15 @@
 {
     "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
     "meta": { "version": "PTDL_v2", "update_url": null },
-    "exported_at": "2026-06-06T00:00:00+07:00",
+    "exported_at": "2026-11-19T10:00:00+08:00",
     "name": "MariaDB",
     "author": "aetherix@lunexia.com",
-    "description": "MariaDB database server egg.\r\n\r\nMariaDB 11.7 is the latest stable release. MariaDB 10.11 is the current LTS branch supported through 2028.\r\n\r\nDefault port: 3306.\r\nData is stored in /home/container/data.",
+    "description": "MariaDB database server egg.\r\n\r\nMariaDB 12.3 is the latest LTS. Also supports 11.8, 11.4 and 10.11 LTS branches.\r\n\r\nDefault port: 3306.\r\nData is stored in /home/container/data.",
     "features": null,
     "docker_images": {
-        "MariaDB 11.7 (Latest)": "ghcr.io/parkervcp/yolks:mariadb_11",
+        "MariaDB 12.3 (LTS)": "ghcr.io/parkervcp/yolks:mariadb_11",
+        "MariaDB 11.8 (LTS)": "ghcr.io/parkervcp/yolks:mariadb_11",
+        "MariaDB 11.4 (LTS)": "ghcr.io/parkervcp/yolks:mariadb_11",
         "MariaDB 10.11 (LTS)": "ghcr.io/parkervcp/yolks:mariadb_10"
     },
     "file_denylist": [],
@@ -20,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!/bin/bash\r\n# MariaDB Installation Script\r\n# by Aetherix-ops\r\n#\r\napt update && apt install -y mariadb-server\r\n\r\nmkdir -p /mnt/server/data\r\n\r\nmysql_install_db --user=root --datadir=/mnt/server/data\r\n\r\necho \"[mysqld]\" > /mnt/server/my.cnf\r\necho \"datadir=/home/container/data\" >> /mnt/server/my.cnf\r\necho \"port=3306\" >> /mnt/server/my.cnf\r\necho \"bind-address=0.0.0.0\" >> /mnt/server/my.cnf\r\necho \"innodb_buffer_pool_size=128M\" >> /mnt/server/my.cnf\r\n\r\necho \"install complete\"",
+            "script": "#!/bin/bash\r\n# MariaDB Installation Script\r\n#\r\napt update && apt install -y mariadb-server\r\n\r\nmkdir -p /mnt/server/data\r\n\r\nmysql_install_db --user=root --datadir=/mnt/server/data\r\n\r\necho \"[mysqld]\" > /mnt/server/my.cnf\r\necho \"datadir=/home/container/data\" >> /mnt/server/my.cnf\r\necho \"port=3306\" >> /mnt/server/my.cnf\r\necho \"bind-address=0.0.0.0\" >> /mnt/server/my.cnf\r\necho \"innodb_buffer_pool_size=128M\" >> /mnt/server/my.cnf\r\n\r\necho \"install complete\"",
             "container": "ghcr.io/parkervcp/yolks:mariadb_11",
             "entrypoint": "bash"
         }

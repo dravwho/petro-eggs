@@ -1,10 +1,10 @@
 {
     "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
     "meta": { "version": "PTDL_v2", "update_url": null },
-    "exported_at": "2026-06-06T00:00:00+07:00",
+    "exported_at": "2026-11-19T10:00:00+08:00",
     "name": "Redis",
     "author": "aetherix@lunexia.com",
-    "description": "Redis in-memory data store egg.\r\n\r\nRedis 8.x is the latest stable release.\r\nUsed for caching, session storage, pub/sub messaging, and queues.\r\n\r\nDefault port: 6379.\r\nPersistence data stored in /home/container/data.",
+    "description": "Redis in-memory data store egg.\r\n\r\nRedis 8.10 is the latest stable release.\r\nUsed for caching, session storage, pub/sub messaging, and queues.\r\n\r\nDefault port: 6379.\r\nPersistence data stored in /home/container/data.",
     "features": null,
     "docker_images": {
         "Redis 8 (Latest)": "ghcr.io/parkervcp/yolks:redis_8",
@@ -20,7 +20,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!/bin/bash\r\n# Redis Installation Script\r\n# by Aetherix-ops\r\n#\r\napt update && apt install -y redis-server\r\n\r\nmkdir -p /mnt/server/data\r\n\r\necho \"install complete\"",
+            "script": "#!/bin/bash\r\n# Redis Installation Script\r\n#\r\napt update && apt install -y redis-server\r\n\r\nmkdir -p /mnt/server/data\r\n\r\necho \"install complete\"",
             "container": "ghcr.io/parkervcp/yolks:redis_8",
             "entrypoint": "bash"
         }
@@ -57,4 +57,4 @@
             "field_type": "text"
         }
     ]
-        }
+}
